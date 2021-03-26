@@ -2,11 +2,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.DriveMotors;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.util.Units;
@@ -54,16 +52,8 @@ public class Drivetrain extends SubsystemBase {
   }
   
 
-  /* motor sürücüleri üzerinden encoder datası alma{
-    getLeftDistance
-    getRightDistance
-
-    resetEncoders
-    
-    getAverageDistance
-  }*/
-
-//drivetrain 
+ 
+//Sağ ya da sol - ile çarpılacak
   public static double getLeftDistance(){
     return ((-Drivetrain.frontLeftMotor.getSelectedSensorPosition()/4096.0) * 2.0 * Math.PI * (3.0 * 2.54) + 
     (-Drivetrain.rearLeftMotor.getSelectedSensorPosition()/4096.0) * 2.0 * Math.PI * (3.0 * 2.54))/2.0;
@@ -82,8 +72,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getHeading(){
-    return Math.IEEEremainder(gyro.getAngle(), 360) * (DriveMotors.kGyroReversed ? -1.0 : 1.0);
+    return gyro.getRotation2d().getDegrees();
+    //return Math.IEEEremainder(- gyro.getAngle(),360); 
   }
+//* (DriveMotors.kGyroReversed ? - 1.0 : 1.0);
+// ? den sonra - vardı denemek için sildim//
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
@@ -106,11 +99,14 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    frontLeftMotor.setVoltage(leftVolts);
-    rearLeftMotor.setVoltage(leftVolts);
+    //Sağ ya da sol - ile çarpılacak
+    //Adamın biri Sağ önü - ile çarpmış
+  
+    frontLeftMotor.setVoltage(-leftVolts);
+    rearLeftMotor.setVoltage(-leftVolts);
     frontRightMotor.setVoltage(-rightVolts);
     rearRightMotor.setVoltage(-rightVolts);
-
+//sağ veya solu eksi ile çarpıcaz
     mecanumDrive.feed();
   }
 

@@ -38,7 +38,7 @@ public final class Constants {
 
 		// Example value only - as above, this must be tuned for your drive!
 		public static final double kPDriveVel = 0.449;
-		public static final double kTrackwidthMeters = 0.69;
+		public static final double kTrackwidthMeters = 0.7;
 		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
     	public static final double kMaxSpeedMetersPerSecond = 3;
