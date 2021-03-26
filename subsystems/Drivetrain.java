@@ -5,6 +5,7 @@ import frc.robot.Constants;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.util.Units;
@@ -71,10 +72,11 @@ public class Drivetrain extends SubsystemBase {
     m_odometry.update(gyro.getRotation2d(), getLeftDistance(), getRightDistance());
   }
 
-  public double getHeading(){
-    return gyro.getRotation2d().getDegrees();
+  public Rotation2d getHeading(){
+    return Rotation2d.fromDegrees(Math.IEEEremainder(-gyro.getAngle(), 360));
     //return Math.IEEEremainder(- gyro.getAngle(),360); 
   }
+  //(gyro.getRotation2d().getDegrees()* -1);
 //* (DriveMotors.kGyroReversed ? - 1.0 : 1.0);
 // ? den sonra - vardı denemek için sildim//
 
