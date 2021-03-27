@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.util.Units;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Drivetrain extends SubsystemBase {
@@ -18,6 +19,8 @@ public class Drivetrain extends SubsystemBase {
   //kinematics
   //odometry
   //position
+
+  
   
 
   public static WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(Constants.frontLeftMotor);
@@ -32,8 +35,18 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain(AHRS gyro) {
     this.gyro = gyro;
-    m_odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
+    m_odometry = new DifferentialDriveOdometry(getHeading());
+    rearLeftMotor.setNeutralMode(NeutralMode.Coast);
+    rearRightMotor.setNeutralMode(NeutralMode.Coast);
+    frontLeftMotor.setNeutralMode(NeutralMode.Coast);
+    frontRightMotor.setNeutralMode(NeutralMode.Coast);
+    frontLeftMotor.setSafetyEnabled(false);
+    rearRightMotor.setSafetyEnabled(false);
+    frontRightMotor.setSafetyEnabled(false);
+    rearLeftMotor.setSafetyEnabled(false);
   }
+
+
 
   public void driveMecanum(double x, double y, double rot){
     mecanumDrive.driveCartesian(y,x,rot);
@@ -56,33 +69,33 @@ public class Drivetrain extends SubsystemBase {
  
 //Sağ ya da sol - ile çarpılacak
   public static double getLeftDistance(){
-    return ((-Drivetrain.frontLeftMotor.getSelectedSensorPosition()/4096.0) * 2.0 * Math.PI * (3.0 * 2.54) + 
-    (-Drivetrain.rearLeftMotor.getSelectedSensorPosition()/4096.0) * 2.0 * Math.PI * (3.0 * 2.54))/2.0;
+    return ((-Drivetrain.frontLeftMotor.getSelectedSensorPosition()/4096.0) * 2.0 * Math.PI * Units.inchesToMeters(3.0) + 
+    (-Drivetrain.rearLeftMotor.getSelectedSensorPosition()/4096.0) * 2.0 * Math.PI * Units.inchesToMeters(3.0))/2.0;
   }
   
   public static double getRightDistance(){
-    return ((Drivetrain.frontRightMotor.getSelectedSensorPosition()/4096.0) * 2 * Math.PI * (3.0 * 2.54) + 
-    (Drivetrain.rearRightMotor.getSelectedSensorPosition()/4096.0) * 2.0 * Math.PI * (3.0 * 2.54))/2.0;
+    return ((Drivetrain.frontRightMotor.getSelectedSensorPosition()/4096.0) * 2 * Math.PI * Units.inchesToMeters(3.0) + 
+    (Drivetrain.rearRightMotor.getSelectedSensorPosition()/4096.0) * 2.0 * Math.PI * Units.inchesToMeters(3.0))/2.0;
   }
     
   
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_odometry.update(gyro.getRotation2d(), getLeftDistance(), getRightDistance());
+    m_odometry.update(getHeading(), getLeftDistance(), getRightDistance());
   }
 
   public Rotation2d getHeading(){
     return Rotation2d.fromDegrees(Math.IEEEremainder(-gyro.getAngle(), 360));
     //return Math.IEEEremainder(- gyro.getAngle(),360); 
   }
-  //(gyro.getRotation2d().getDegrees()* -1);
+  //(getHeading().getDegrees()* -1);
 //* (DriveMotors.kGyroReversed ? - 1.0 : 1.0);
 // ? den sonra - vardı denemek için sildim//
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
-    m_odometry.resetPosition(pose, gyro.getRotation2d());
+    m_odometry.resetPosition(pose, getHeading());
   }
 
   public double getAverageDistance(){
@@ -103,9 +116,8 @@ public class Drivetrain extends SubsystemBase {
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     //Sağ ya da sol - ile çarpılacak
     //Adamın biri Sağ önü - ile çarpmış
-  
-    frontLeftMotor.setVoltage(-leftVolts);
-    rearLeftMotor.setVoltage(-leftVolts);
+    frontLeftMotor.setVoltage(leftVolts);
+    rearLeftMotor.setVoltage(leftVolts);
     frontRightMotor.setVoltage(-rightVolts);
     rearRightMotor.setVoltage(-rightVolts);
 //sağ veya solu eksi ile çarpıcaz
