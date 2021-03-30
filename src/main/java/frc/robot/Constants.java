@@ -47,8 +47,9 @@ public final class Constants {
 		public static final double kaVoltSecondsSquaredPerMeter = 0.068;
 
 		// Example value only - as above, this must be tuned for your drive!
-		public static final double kPDriveVelLeft = 0.839;
-		public static final double kPDriveVelRight = 0.839;
+		//0.839 eski değer
+		public static final double kPDriveVelLeft = 0.0;
+		public static final double kPDriveVelRight = 0.0;
 		//public static final double kTrackwidthMeters = 0.7;
 		//public static final double kTrackwidthMeters = 1.2370455376;
 		public static final double kTrackwidthMeters = 1.16831373;
