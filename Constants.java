@@ -41,17 +41,18 @@ public final class Constants {
 
 	public static final class TrajectoryDriving{
 		//Eski değer; 0.91 -characterizationdan
-		public static final double ksVolts = 0.91;
+		public static final double ksVolts = 1.25;
 		//Eski değer 3.66
-		public static final double kvVoltSecondsPerMeter = 4.0;
-		public static final double kaVoltSecondsSquaredPerMeter = 0.0442;
+		public static final double kvVoltSecondsPerMeter = 3.57;
+		public static final double kaVoltSecondsSquaredPerMeter = 0.068;
 
 		// Example value only - as above, this must be tuned for your drive!
-		public static final double kPDriveVelLeft = 0.87;
-		public static final double kPDriveVelRight = 0.60;
+		//0.839 eski değer
+		public static final double kPDriveVelLeft = 0.0;
+		public static final double kPDriveVelRight = 0.0;
 		//public static final double kTrackwidthMeters = 0.7;
 		//public static final double kTrackwidthMeters = 1.2370455376;
-		public static final double kTrackwidthMeters = 0.65;
+		public static final double kTrackwidthMeters = 1.16831373;
 		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
     	public static final double kMaxSpeedMetersPerSecond = 3;

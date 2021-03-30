@@ -19,10 +19,6 @@ public class Drivetrain extends SubsystemBase {
   //kinematics
   //odometry
   //position
-
-  
-  
-
   public static WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(Constants.frontLeftMotor);
   public static WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(Constants.frontRightMotor);
   public static WPI_TalonSRX rearLeftMotor = new WPI_TalonSRX(Constants.rearLeftMotor);
