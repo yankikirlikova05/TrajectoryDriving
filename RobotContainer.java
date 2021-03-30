@@ -1,11 +1,7 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 import java.io.IOException;
 import java.nio.file.Path;
-//import java.util.List;
+import java.util.List;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -17,16 +13,15 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 //import edu.wpi.first.wpilibj.drive.MecanumDrive;
-//import edu.wpi.first.wpilibj.geometry.Pose2d;
-//import edu.wpi.first.wpilibj.geometry.Rotation2d;
-//import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-//import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-//import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -34,8 +29,6 @@ import frc.robot.subsystems.Drivetrain;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
-  
   public static AHRS gyro = new AHRS();
   public static Drivetrain drivetrain = new Drivetrain(gyro);
   public static Joystick jstick = new Joystick(Constants.jstick_port);
@@ -82,32 +75,35 @@ public class RobotContainer {
             .addConstraint(autoVoltageConstraint);
 
     // An example trajectory to follow.  All units in meters.
-    
-    
-    try{
+    /*try{
       exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     }
     catch(IOException ex){
       DriverStation.reportError("Unable to open trajectory" , true);
-    }    
-    /*TrajectoryGenerator.generateTrajectory(
+    }    */
+    exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
-        List.of(
-            new Translation2d(1.5, 0.23),
-            new Translation2d(2.5, 0.23),
-            new Translation2d(3.5, 1.23),
-            new Translation2d(5.0, 2.23),
-            new Translation2d(5.5, 3.23)
+        List.of( 
+          /*new Translation2d(1, 0),
+            new Translation2d(2.5, -1),
+            new Translation2d(4,-1.5),
+            new Translation2d(4.5,-1.7),
+            new Translation2d(4,-1.9)*/
+
+            new Translation2d(2.5, -0.923),
+            new Translation2d(3.5, 1.23)
+            //new Translation2d(5.0, 2.23),
+            //new Translation2d(5.5, 3.23)
             //4.23 metre sola
             //6.5 metre ileri
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(6.5, 4.23, new Rotation2d(0)),
+        new Pose2d(5.7, -1, new Rotation2d(90)),
         // Pass config
-        config*/
-    
+        config
+    );
 
     RamseteCommand ramseteCommand = new RamseteCommand(
         exampleTrajectory,
@@ -115,8 +111,8 @@ public class RobotContainer {
         new RamseteController(Constants.TrajectoryDriving.kRamseteB, Constants.TrajectoryDriving.kRamseteZeta),
         new SimpleMotorFeedforward(Constants.TrajectoryDriving.ksVolts,
                                    Constants.TrajectoryDriving.kvVoltSecondsPerMeter,
-                                    Constants.TrajectoryDriving.kaVoltSecondsSquaredPerMeter),
-        Constants.TrajectoryDriving.kDriveKinematics,
+                                   Constants.TrajectoryDriving.kaVoltSecondsSquaredPerMeter),
+                                   Constants.TrajectoryDriving.kDriveKinematics,
         drivetrain::getWheelSpeeds,
         new PIDController(Constants.TrajectoryDriving.kPDriveVelLeft, 0, 0),
         new PIDController(Constants.TrajectoryDriving.kPDriveVelRight, 0, 0),
