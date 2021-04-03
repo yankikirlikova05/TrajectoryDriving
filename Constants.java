@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
@@ -21,7 +17,7 @@ public final class Constants {
 		public static final double kvVoltSecondsPerMeter = 0;
 		public static final double kaVoltSecondsSquaredPerMeter = 0;
 
-		public static final double kTrackwidthMeters = .65;
+		public static final double kTrackwidthMeters = 0.65;
 
     }
 
@@ -39,9 +35,9 @@ public final class Constants {
     public static int rearLeftMotor = 3;
     public static int rearRightMotor = 1;
 
-	public static final class TrajectoryDriving{
+	public static final class TrajectoryDrivingEski{
 		//Eski değer; 0.91 -characterizationdan
-		public static final double ksVolts = 1.25;
+		public static final double ksVolts = 3.33;
 		//Eski değer 3.66
 		public static final double kvVoltSecondsPerMeter = 3.57;
 		public static final double kaVoltSecondsSquaredPerMeter = 0.068;
@@ -60,6 +56,60 @@ public final class Constants {
 		public static final double kRamseteB = 2;
     	public static final double kRamseteZeta = 0.7;
 	}
+
+	public static final class TrajectoryDrivingWithTurret{
+		public static final double ksVolts = 1.11;
+		//Eski değer 3.66
+		public static final double kvVoltSecondsPerMeter = 3.51;
+		public static final double kaVoltSecondsSquaredPerMeter = 0.0327;
+
+		// Example value only - as above, this must be tuned for your drive!
+		//0.173 eski değer
+		public static final double kPDriveVelLeft = 0;
+		public static final double kPDriveVelRight = 0;
+		//public static final double kTrackwidthMeters = 0.7;
+		//public static final double kTrackwidthMeters = 1.2370455376;
+		//public static final double kTrackwidthMeters = 1.2135815005626045;
+		public static final double kTrackwidthMeters = 1.2135815005626045;
+
+		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+
+    	public static final double kMaxSpeedMetersPerSecond = 3;
+    	public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+		public static final double kRamseteB = 2;
+    	public static final double kRamseteZeta = 0.7;
+
+	}
+
+	public static final class TrajectoryDriving{
+		//0.765
+		public static final double ksVolts = 0.765 * 3.2;
+		//Eski değer 3.58a
+		public static final double kvVoltSecondsPerMeter = 3.58 * 0.6;
+		// 0.034
+		public static final double kaVoltSecondsSquaredPerMeter = 0.034 * 2;
+
+		// Example value only - as above, this must be tuned for your drive!
+		//0.173 eski değer, 
+
+		public static final double kPDriveVelLeft = 0.0172;
+		public static final double kPDriveVelRight = 0.0172;
+		//public static final double kPDriveVelLeft = 0.25;
+		//public static final double kPDriveVelRight = 0.25;
+
+		//public static final double kTrackwidthMeters = 0.7;
+		//public static final double kTrackwidthMeters = 1.2370455376;
+		//public static final double kTrackwidthMeters = 1.2135815005626045;
+		//public static final double kTrackwidthMeters = 1.349615199426128;
+		public static final double kTrackwidthMeters = 1.349615199426128 * 1;
+
+
+		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+
+    	public static final double kMaxSpeedMetersPerSecond = 3;
+    	public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+		public static final double kRamseteB = 2;
+    	public static final double kRamseteZeta = 0.7;
+
+	}
 }
-
-
