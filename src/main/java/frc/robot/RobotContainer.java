@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -33,7 +34,7 @@ public class RobotContainer {
   public static Drivetrain drivetrain = new Drivetrain(gyro);
   public static Joystick jstick = new Joystick(Constants.jstick_port);
 
-  public String path = "paths/straight.wpilib.json";
+  public String path = "paths/output/deneme.wpilib.json";
   Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(path);
   Trajectory exampleTrajectory = new Trajectory();
 
@@ -75,36 +76,27 @@ public class RobotContainer {
             .addConstraint(autoVoltageConstraint);
 
     // An example trajectory to follow.  All units in meters.
-    /*try{
+    try{
       exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     }
     catch(IOException ex){
       DriverStation.reportError("Unable to open trajectory" , true);
-    }    */
-    exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+    }    
+    /*exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of( 
-          /*new Translation2d(1, 0),
-            new Translation2d(2.5, -1),
-            new Translation2d(4,-1.5),
-            new Translation2d(4.5,-1.7),
-            new Translation2d(4,-1.9)*/
 
-            new Translation2d(2.5, -0.923),
-            new Translation2d(3.5, 1.23)
-            //new Translation2d(5.0, 2.23),
-            //new Translation2d(5.5, 3.23)
-            //4.23 metre sola
-            //6.5 metre ileri
-        ),
+        List.of( 
+            new Pose2d(0, 0, new Rotation2d(0)),
+            new Pose2d(2.92, 1.3, new Rotation2d(Units.degreesToRadians(0))),
+            new Pose2d(5.05, 0.0, new Rotation2d(Units.degreesToRadians(-90))),
+            new Pose2d(2.92, -1.3, new Rotation2d(Units.degreesToRadians(-180))),
+            new Pose2d(0.0, 0.0, new Rotation2d(Units.degreesToRadians(-180)))
+            ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(5.7, -1, new Rotation2d(90)),
         // Pass config
         config
     );
-
+*/
     RamseteCommand ramseteCommand = new RamseteCommand(
         exampleTrajectory,
         drivetrain::getPose,
